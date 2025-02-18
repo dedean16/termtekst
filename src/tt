@@ -164,7 +164,7 @@ def legacy_graph(c):
     if n >= 64: n = n - 32
 
     chars = {
-        0b000000: 0x2800,  # EMPTY
+        0b000000: 0x0020,  # EMPTY
         0b000001: 0x1FB00, # 🬀 BLOCK SEXTANT 1
         0b000010: 0x1FB01, # 🬁 BLOCK SEXTANT 2
         0b000011: 0x1FB02, # 🬂 BLOCK SEXTANT 12
