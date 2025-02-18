@@ -19,6 +19,7 @@ TTRC = os.path.expanduser('~/.ttrc')
 opt_charset = 'braille'
 opt_refresh_interval = 15
 opt_double_width = False
+opt_time_format_type = 'hm'     # Options: hm or hms
 
 # Tested with python2.7 and python3.5
 from html.parser import HTMLParser
@@ -302,9 +303,18 @@ def show(scr, p, page):
         try:
             ls = p['content'].split('\n')
             y = 0
+
+            # Time format with or without seconds
+            if opt_time_format_type == 'hm':
+                time_format = '%H:%M   '
+            elif opt_time_format_type == 'hms':
+                time_format = '%H:%M:%S'
+            else:
+                raise ValueError
+
             for l in ls:
                 scr.attrset(0)
-                scr.addstr(0, 3, datetime.now().strftime('%H:%M:%S'))
+                scr.addstr(0, 3, datetime.now().strftime(time_format))
                 scr.move(y, 0)
                 show_line(scr, html_funcs.unescape(l))
                 y = y + 1
@@ -404,7 +414,7 @@ def main(scr):
             scr.refresh()
             p = load(page)
 
-    
+
 if os.path.isfile(TTRC):
     p = ConfigParser.ConfigParser()
     p.read(TTRC)
